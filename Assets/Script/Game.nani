@@ -1,0 +1,71 @@
+@back Location_1
+@spawn Snow
+
+@set name=""
+@input name summary:"Enter your name."
+@stop
+
+@char NPC_1
+NPC_1: Приветствую тебя, {name}! У меня для тебя важное дело. Нам нужны данные из Локации -2. Пожалуйста, пообщайся с НПЦ-2 и узнай, что у него происходит.
+@hide NPC_1
+
+@despawn Snow
+@back Location_2
+@char NPC_2.NPC2
+NPC_2: О, тебя прислали? У меня проблемы с электронной защитой. Пройди мини-игру, помоги мне, и я расскажу, что ты ищешь.
+
+{name}: Хорошо... Посмотрим что там за мини-игра...
+@char MainCharacter.GG
+
+@goto MiniGame.StartMiniGame
+
+#EndMiniGame
+@clearChoice
+NPC_2: Спасибо за помощь. Но теперь у нас новый запрос. Есть в Локации -3 интересный предмет. Получи его, и мы продвинемся дальше.
+@hide NPC_2
+@hide MainCharacter
+
+@back Location_3
+@spawn Snow
+
+Все еще идет снег... А это что такое присыпаное снегом? Тот самый предмет?
+
+@addItem Subject
+@showUI Inventory
+
+Нужно вернуться в Локацию -2 и спросить что это...
+
+@hideUI Inventory
+
+@despawn Snow
+@back Location_2
+
+Пусто здесь. Вернемся к себе.
+
+@spawn Snow
+@back Location_1
+@show NPC_1
+@show NPC_2
+NPC_1: Замечательно, ты вернулся! У нас есть теперь важное решение. Каждый из нас хочет этот предмет. Кому отдашь?
+
+@choice NPC1 goto:.chooseNPC1
+@choice NPC2 goto:.chooseNPC2
+@choice {name} goto:.choosemyself
+@wait i
+
+#chooseNPC1
+@hide NPC_1
+NPC_2: Ех, ладно {name}. это твой выбор.
+@stop
+
+#chooseNPC2
+@hide NPC_2
+NPC_1: Так уж и быть, всё равно я в этом не сильно нуждаюсь
+@stop
+
+#choosemyself
+NPC_1: Забираешь ее себе? Хорошо, ты заслужил.
+NPC_2: Не спорю, пускай он будет твоим.
+@stop
+
+@stop

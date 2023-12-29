@@ -1,0 +1,51 @@
+@goto Game
+
+# StartMiniGame
+@set question=1
+
+# QuestionOne
+NPC_2: Загадка первая! Без окон без дверей, полный дом людей. Что это? Варианты ответов:
+@choice Огурец goto:.CorectAnswer
+@choice "Затерянный замок" goto:.WrongAnswer
+@choice "Не знаю" goto:.WrongAnswer
+@wait i
+@clearChoice 
+
+# QuestionTwo
+NPC_2: Загадка вторая! Дед одет в сто шуб, кто его раздевает, тот проливает слезы? Кто это? Варианты ответов
+@choice Цыганка goto:.WrongAnswer
+@choice Лук goto:.CorectAnswer
+@choice Медведь goto:.WrongAnswer
+@wait i
+@clearChoice 
+
+# QuestionThree
+NPC_2: Загадка третья! Не человек и не чучело, не живое и не мертвое? Варианты ответов:
+@choice Душа? goto:.WrongAnswer
+@choice Ты? goto:Game.EndMiniGame
+@choice Босс? goto:.WrongAnswer
+@wait i
+@clearChoice 
+
+# WrongAnswer
+NPC_2: Не верно. Но даю еще один шанс.
+@set question=1
+@goto .QuestionOne
+
+# CorectAnswer
+@set question++
+NPC_2: Верно!!! Продолжим?
+{name}: Да, давай.
+@wait i
+
+@if question==2
+@goto .QuestionTwo
+@wait i
+@endif
+
+@if question==3
+@goto .QuestionThree
+@wait i
+@endif
+
+@stop
